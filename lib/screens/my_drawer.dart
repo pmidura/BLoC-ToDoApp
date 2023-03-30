@@ -1,9 +1,9 @@
 import 'package:bloc_to_do_app/screens/recycle_bin.dart';
-import 'package:bloc_to_do_app/screens/tasks_screen.dart';
+import 'package:bloc_to_do_app/screens/tabs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/tasks_bloc.dart';
+import '../blocs/tasks_bloc/tasks_bloc.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -27,12 +27,11 @@ class MyDrawer extends StatelessWidget {
               BlocBuilder<TasksBloc, TasksState>(
                 builder: (context, state) {
                   return GestureDetector(
-                    onTap: () =>
-                        Navigator.of(context).pushNamed(TasksScreen.id),
+                    onTap: () => Navigator.of(context).pushReplacementNamed(TabsScreen.id),
                     child: ListTile(
                       leading: const Icon(Icons.folder_special),
                       title: const Text('My Tasks'),
-                      trailing: Text('${state.allTasks.length}'),
+                      trailing: Text('${state.pendingTasks.length} | ${state.completedTasks.length}'),
                     ),
                   );
                 },
@@ -43,7 +42,7 @@ class MyDrawer extends StatelessWidget {
               BlocBuilder<TasksBloc, TasksState>(
                 builder: (context, state) {
                   return GestureDetector(
-                    onTap: () => Navigator.of(context).pushNamed(RecycleBin.id),
+                    onTap: () => Navigator.of(context).pushReplacementNamed(RecycleBin.id),
                     child: ListTile(
                       leading: const Icon(Icons.delete),
                       title: const Text('Bin'),
